@@ -88,9 +88,9 @@ export const TableComponent: React.FunctionComponent<Props> = (props) => {
         )}
         {onDelete && (
           <ConfirmationDialogComponent
-            isOpen={isOpenConfirmation}
+            isOpen={isOpenConfirmation!}
             onAccept={onDelete}
-            onClose={onCloseConfirmation}
+            onClose={onCloseConfirmation!}
             title={labels.deleteTitle}
             labels={{
               closeButton: labels.closeButton,
