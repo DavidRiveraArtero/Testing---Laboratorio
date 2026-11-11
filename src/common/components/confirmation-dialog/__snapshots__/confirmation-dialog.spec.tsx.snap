@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Component Confirmation Dialog > popup confirm dialog 1`] = `<DocumentFragment />`;
+
+exports[`popup confirm dialog 1`] = `<DocumentFragment />`;
