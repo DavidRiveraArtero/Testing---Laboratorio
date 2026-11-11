@@ -1,8 +1,10 @@
 import { mapProjectFromApiToVm } from "./project.mapper"
 import * as viewModel from './project.vm';
+import * as apiModel from './api/project.api-model';
+import * as projectApi from "./api";
 
 describe("Testing mapProjectFromApiToVm from /pods/project/project.mapper", () => {
-    it("Return a Project with one employee", () => {
+    it("Return a Project with one employee", async () => {
         // ARR
         const project:viewModel.Project = {
             employees:[{id:"1",employeeName:"Juan", isAssigned:true}],
@@ -12,34 +14,40 @@ describe("Testing mapProjectFromApiToVm from /pods/project/project.mapper", () =
             comments: "",
             externalId:"1"
         }
+
+        vi.spyOn(projectApi, 'getProjectById').mockResolvedValue(project)
+
+        const getProjectResult = await projectApi.getProjectById()
         // ACT
-        const result = mapProjectFromApiToVm(project)
+        const result = mapProjectFromApiToVm(getProjectResult)
 
         // ASSERT
         expect(result).toStrictEqual(project)
     })
 
-    it("Return a Empty object if we pass a undefined or null value", () => {
-        // ARR
-        const a = {
+    it.each<{project: apiModel.Project}>
+    ([
+        {project: undefined!},
+        {project: null!}
+    ])
+    ('should return a default object if we pass a %s',({project}) => {
+        // ACT
+        const result =  mapProjectFromApiToVm(project)
+
+        expect(result).toStrictEqual({
                 id: '',
                 name: '',
                 externalId: '',
                 comments: '',
                 isActive: false,
                 employees: [],
-        }
-        // ACT
-        const result =  mapProjectFromApiToVm(undefined!)
-        // ASSERT
-        expect(result).toStrictEqual(a)
+        })
+    }) 
 
-    })
-
-    it("Regresa un objeto donde Employee regresa un array vacio si le pasamos cualquier otra cosa que no sea un array", () => {
+    it("should return an object with an empty Employee array when passed anything other than an array", async () => {
         // ARR
-        const a = {
-                id: '',
+        const project = {
+                id: '1',
                 name: '',
                 externalId: '',
                 comments: '',
@@ -47,16 +55,21 @@ describe("Testing mapProjectFromApiToVm from /pods/project/project.mapper", () =
                 employees: 'hola',
         }
 
+        // @ts-ignore
+        vi.spyOn(projectApi, 'getProjectById').mockResolvedValue(project)
+
+        const projectResult = await projectApi.getProjectById()
+
         // ACT
-        const result = mapProjectFromApiToVm(a)
+        const result = mapProjectFromApiToVm(projectResult)
         // ASSERT
         expect(result).toStrictEqual({
-            id: '',
+            id: '1',
             name: '',
             externalId: '',
             comments: '',
             isActive: false,
-            employees: [],
+            employees: []
         })
     })
 })

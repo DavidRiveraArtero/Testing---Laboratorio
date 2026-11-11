@@ -19,7 +19,7 @@ export const mapEmployeeFromApiToVm = (
   return Boolean(employee)
     ? {
         ...employee,
-        projects: mapProjectSummaryListFromApiToVm(employee.projects),
+        projects: mapProjectSummaryListFromApiToVm(employee.projects!),
       }
     : viewModel.createEmptyEmployee();
 };
