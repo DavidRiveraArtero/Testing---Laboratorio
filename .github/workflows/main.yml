@@ -20,10 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: cypress-io/github-action@v6
         with:
-          node-version: "24"
-          cache: "npm"
-      - run: npm ci
-      - run: npm start
-      - run: npx cypress run
+          start: npm start
+          wait-on: "http://localhost:3000"
