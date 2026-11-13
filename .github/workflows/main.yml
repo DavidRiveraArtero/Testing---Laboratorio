@@ -1,0 +1,32 @@
+name: Test
+
+on: pull_request
+
+jobs:
+  test:
+    name: checkout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - run: npm test -- project.mapper.spec confirmation-dialog.hook.spec confirmation-dialog.component.spec spinner.component.spec
+
+  test-e2e:
+    name: test-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - name: Iniciar servidor y ejecutar Cypress
+        run: |
+          npm start &
+          npx wait-on http://localhost:5173
+          npx cypress run
