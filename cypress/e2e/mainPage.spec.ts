@@ -8,7 +8,7 @@ describe('Main page test',() => {
 
     })
 
-    it('should redirect to login page when we click to logout button ', () => { 
+    it('should display navigation options when clicking the profile button ', () => { 
         // ARRANGE  
 
         // ACT
@@ -22,7 +22,7 @@ describe('Main page test',() => {
         cy.url().should('include','/#/login')
     }) 
 
-    it('should render a menu when we click the menu button', () => {
+    it('should render a menu when we click on menu button', () => {
         // ARRANGE
 
         // ACT
@@ -37,7 +37,7 @@ describe('Main page test',() => {
         cy.get('@btnCalendar').should('be.visible')
     })
 
-    it('should render project page when we click to project button', () => {
+    it('should navigate to the projects page when clicking the "Proyectos" link', () => {
         // ARRANGE
         
         // ACT

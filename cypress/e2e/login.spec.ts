@@ -1,6 +1,6 @@
 describe("Login spec",() => {
 
-    it('visi login page', () => { 
+    it('should render the login page', () => { 
         // ARRANGE
 
         // ACT
@@ -8,7 +8,7 @@ describe("Login spec",() => {
         // ASSERT
     })
 
-    it('should user input has been focus when it clicks on', () => { 
+    it('should focus the user input when clicked', () => { 
         // ARRANGE
 
         // ACT
@@ -19,7 +19,7 @@ describe("Login spec",() => {
         cy.focused().should('have.attr', 'name', 'user')
     })
 
-    it('should show a error message when we login with not credentials', () => { 
+    it('should display validation error messages when submitting empty credentials', () => { 
         // ARRANGE
 
         // ACT
@@ -32,7 +32,7 @@ describe("Login spec",() => {
         cy.get('@errorMessage').should('be.visible')
     })
 
-    it('should show a popup error message when we login with invalid credentials', () => {
+    it('should display an error message when logging in with invalid credentials', () => {
         // ARRANGE
         const user:string = 'admin'
         const password:string = '123'
@@ -50,7 +50,7 @@ describe("Login spec",() => {
         cy.contains('div','Usuario y/o password no válidos').should('be.visible')
     })
 
-    it('should navigate to main page when we login with valid credentials', () => {
+    it('should navigate to the main page when logging in with valid credentials', () => {
         // ARRANGE
         const user:string = 'admin'
         const password:string = 'test'
